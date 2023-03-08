@@ -1,0 +1,85 @@
+version: '3.1'
+services:
+
+  employee-db:
+    container_name: employee-db
+    image: mysql
+    ports:
+      - 3307:3307
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: employeedb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    networks:
+      - back-end
+    volumes:
+      - employee-db:/var/lib/mysql
+    
+  login-db:
+    container_name: login-db
+    image: mysql
+    ports:
+      - 3308:3308
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: logindb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    networks:
+      - back-end
+    volumes:
+      - login-db:/var/lib/mysql
+
+  employee-service:
+    container_name: employee-service
+    build:
+      context: ./employee-service
+      dockerfile: Dockerfile
+    ports:
+      - 8082:8082
+    depends_on:
+      - employee-db
+    networks:
+      - back-end
+
+  login-service:
+    container_name: login-service
+    build:
+      context: ./login-service
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      - login-db
+    networks:
+      - back-end
+
+  discovery-service:
+    container_name: discovery-service
+    build:
+      context: ./discovery-service
+      dockerfile: Dockerfile
+    ports:
+      - 8011:8011
+    networks:
+      - back-end
+
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - 8012:8012
+    networks:
+      - back-end
+      - front-end
+
+networks:
+  back-end:
+  front-end:
+
+volumes:
+  employee-db:
+  login-db:

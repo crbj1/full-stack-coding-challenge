@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yml
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: login-service
+  name: login-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: login-service
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yml
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/back-end: "true"
+        io.kompose.service: login-service
+    spec:
+      containers:
+        - image: icr.io/fscc-namespace/fscc-repo@sha256:6248864f4b5626c7568a88c1239071472bb98cf8d42733eae447504318e32b24
+          name: login-service
+          ports:
+            - containerPort: 8081
+          resources: {}
+      restartPolicy: Always
+      tolerations:
+        - key: "node.kubernetes.io/memory-pressure"
+          operator: "Exists"
+          effect: "NoSchedule"
+status: {}

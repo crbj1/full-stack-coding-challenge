@@ -1,0 +1,38 @@
+server:
+  port: 8012
+  
+spring:
+  application:
+    name: api-gateway    
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8011/eureka/
+               
+ribbon:
+  eureka:
+    enabled: true
+  
+zuul:
+  #ignoredServices: '*'
+  host:
+    time-to-live: -1
+    connect-timeout-millis: 5000
+    max-per-route-connections: 10000
+    max-total-connections: 5000
+    socket-timeout-millis: 60000
+  semaphore:
+    max-semaphores: 500
+  sensitive-headers: Cookie, Set-Cookie
+  #ignored-headers:
+  #- Access-Control-Allow-Credentials
+  #- Access-Control-Allow-Origin
+  routes:
+    employee-service:
+      path: /employee/**
+      service-id: EMPLOYEE-WS
+    login-service:
+      path: /login/**
+      service-id: LOGIN-WS
+      

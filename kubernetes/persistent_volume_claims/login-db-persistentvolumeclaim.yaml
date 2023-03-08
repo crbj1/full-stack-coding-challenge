@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    ibm.io/auto-create-bucket: "true"
+    ibm.io/auto-delete-bucket: "false"
+    ibm.io/bucket: "cbergeron-fscc-login-data"
+    ibm.io/secret-name: "cos-write-access"
+    ibm.io/tls-cipher-suite: "default"
+  creationTimestamp: null
+  labels:
+    io.kompose.service: login-db
+  name: login-db
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: ibmc-s3fs-standard-regional
+status: {}

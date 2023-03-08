@@ -1,0 +1,26 @@
+<div class="card mt-4">
+    <h4 class="card-header">You're logged in with Angular 8 & JWT!!</h4>
+    <div class="card-body">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button">
+            <a routerLink="/addEmployee">Add Employee</a>
+        </button>
+        <h6>List of employees</h6>
+        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+        <table class="table table-striped table-bordered table-hover" *ngIf="employees">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employees">
+                    <td scope="row">
+                        <a routerLink="/employee/{{employee.id}}">{{employee.firstName}} {{employee.lastName}}</a>
+                    </td>
+                    <td>{{employee.email}}</td>
+                </tr>
+            </tbody>  
+        </table>
+    </div>
+</div>

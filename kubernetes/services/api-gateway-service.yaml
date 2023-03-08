@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yml
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: api-gateway
+  name: api-gateway
+spec:
+  ports:
+    - name: "8012"
+      port: 8012
+      targetPort: 8012
+  selector:
+    io.kompose.service: api-gateway
+status:
+  loadBalancer: {}

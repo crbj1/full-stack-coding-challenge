@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: login-ws
+  datasource:
+    password: password
+    url: jdbc:mysql://login-db:3306/logindb
+    username: user
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8011/eureka/
+      
+jwt:
+  secret: secret
+  
+
